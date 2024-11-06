@@ -1,0 +1,155 @@
+{
+  "name": "crayon-box",
+  "displayName": "CrayonBox",
+  "description": "CrayonBox",
+  "version": "0.0.1",
+  "license": "GPL-3.0-only",
+  "publisher": "naomi233",
+  "author": "Naomi <33375791+Henvy-Mango@users.noreply.github.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Henvy-Mango/crayon-box.git"
+  },
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "keywords": [
+    "btc",
+    "stock",
+    "binance",
+    "CrayonBox",
+    "股票",
+    "虚拟币"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "crayon-box.toggle",
+        "title": "Toggle Status Bar Visibility"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "title",
+      "properties": {
+        "crayon-box.enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "crayon-box.interval": {
+          "type": "number",
+          "default": 5000
+        },
+        "crayon-box.binance": {
+          "type": "object",
+          "default": {
+            "symbols": [
+              "BTCUSDT"
+            ],
+            "order": 0,
+            "apiUrl": "https://data-api.binance.vision",
+            "windowSize": "1d"
+          },
+          "properties": {
+            "symbols": {
+              "type": "array",
+              "default": [
+                "BTCUSDT"
+              ]
+            },
+            "order": {
+              "type": "number",
+              "default": 0
+            },
+            "apiUrl": {
+              "type": "string",
+              "format": "uri",
+              "default": "https://data-api.binance.vision"
+            },
+            "windowSize": {
+              "type": "string",
+              "enum": [
+                "1m",
+                "5m",
+                "15m",
+                "30m",
+                "1h",
+                "4h",
+                "1d"
+              ],
+              "default": "1d"
+            }
+          }
+        },
+        "crayon-box.stock": {
+          "type": "object",
+          "default": {
+            "symbols": [
+              "sh000001"
+            ],
+            "order": 0
+          },
+          "properties": {
+            "symbols": {
+              "type": "array",
+              "default": [
+                "sh000001"
+              ]
+            },
+            "order": {
+              "type": "number",
+              "default": 0
+            }
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "pnpm run check-types && pnpm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "pnpm run check-types && pnpm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "vsce:build": "vsce package --no-dependencies",
+    "vsce:publish": "vsce publish --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.9",
+    "@types/node": "20.x",
+    "@types/vscode": "1.94.0",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.2.1",
+    "axios": "^1.7.7",
+    "bignumber.js": "^9.1.2",
+    "dayjs": "^1.11.13",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
+  }
+}
