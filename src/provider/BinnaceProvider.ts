@@ -5,8 +5,6 @@ import { formatNumber } from '~/utils/helper'
 import BaseProvider from './BaseProvider'
 import BinanceService from '~/service/BinnaceService'
 
-import type { ProviderItem } from '~/types'
-
 export default class BinnaceProvider extends BaseProvider {
     private binanceService = new BinanceService()
 

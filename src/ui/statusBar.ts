@@ -3,11 +3,13 @@ import * as vscode from 'vscode'
 import config from '~/utils/config'
 import StockProvider from '~/provider/StockProvider'
 import BinnaceProvider from '~/provider/BinnaceProvider'
+import { isTradingDay, isTradingHours } from '~/utils/helper'
 
 import type { ProviderItem } from '~/types'
 
 export default class StatusBar {
     private visible = true
+    private isTradingDay = true
 
     private binnaceProvider: BinnaceProvider
     private binnaceStatusBarList: vscode.StatusBarItem[] = []
@@ -25,6 +27,9 @@ export default class StatusBar {
     }
 
     init() {
+        const that = this
+        isTradingDay().then((o) => (that.isTradingDay = o))
+
         this.initBinnaceStatusBar()
         this.initStockStatusBar()
     }
@@ -35,8 +40,12 @@ export default class StatusBar {
 
     refresh() {
         if (!this.visible) return
+
+        if (isTradingHours() && this.isTradingDay) {
+            this.refreshStockStatusBar()
+        }
+
         this.refreshBinnaceStatusBar()
-        this.refreshStockStatusBar()
     }
 
     toggle() {
