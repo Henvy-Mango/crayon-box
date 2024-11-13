@@ -28,4 +28,8 @@ export default class BinanceService {
             symbols: JSON.stringify(symbols),
             windowSize: windowSize,
         })
+
+    private lastPrice = '/api/v3/ticker/price'
+    getLastPrice = (symbols?: string[]) =>
+        this.client.getRequset<{ symbol: string; price: string }[]>(this.lastPrice, { symbols })
 }

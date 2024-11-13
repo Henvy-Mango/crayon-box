@@ -2,11 +2,10 @@ import config from '~/utils/config'
 import { Client } from '~/utils/client'
 
 export default class StockService {
-    private client = new Client('https://hq.sinajs.cn')
-
+    private infoClient = new Client('https://hq.sinajs.cn')
     private stockInfo = '/list'
     getStockInfo = (symbols: string[]) =>
-        this.client.getRequset<string>(`${this.stockInfo}=${symbols.join(',')}`, undefined, {
+        this.infoClient.getRequset<string>(`${this.stockInfo}=${symbols.join(',')}`, undefined, {
             responseType: 'arraybuffer',
             transformResponse: [
                 (data) => {
@@ -19,4 +18,8 @@ export default class StockService {
                 Referer: 'http://finance.sina.com.cn/',
             },
         })
+
+    private searchClient = new Client('https://proxy.finance.qq.com')
+    private searchStock = '/ifzqgtimg/appstock/smartbox/search/get'
+    getSearchStock = (keyword: string) => this.searchClient.getRequset<any>(this.searchStock, { q: keyword })
 }

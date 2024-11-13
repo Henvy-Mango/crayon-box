@@ -62,4 +62,8 @@
 ## Todo
 
 - [ ] 涨跌幅消息通知
-- [ ] 通过 GUI 配置自选虚拟币、股票
+- [x] 通过 GUI 配置自选虚拟币、股票
+
+## 致谢
+
+- [leek-fund](https://github.com/LeekHub/leek-fund)

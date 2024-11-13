@@ -44,4 +44,22 @@ export default class BinnaceProvider extends BaseProvider {
             }
         })
     }
+
+    async suggest(keyword?: string) {
+        let result
+        try {
+            result = await this.binanceService.getLastPrice()
+        } catch (error) {
+            console.error(error)
+            return []
+        }
+
+        return result.map((o) => {
+            return {
+                label: o.symbol,
+                detail: o.symbol,
+                description: 'binnace',
+            }
+        })
+    }
 }

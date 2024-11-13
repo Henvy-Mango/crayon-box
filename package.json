@@ -37,9 +37,19 @@
   "contributes": {
     "commands": [
       {
-        "command": "crayon-box.toggle",
+        "command": "crayon-box.toggleStatusBar",
         "category": "CrayonBox",
         "title": "Toggle Status Bar Visibility"
+      },
+      {
+        "command": "crayon-box.addBinance",
+        "category": "CrayonBox",
+        "title": "Add Binance Symbol to Status Bar"
+      },
+      {
+        "command": "crayon-box.addStock",
+        "category": "CrayonBox",
+        "title": "Add Stock Symbol to Status Bar"
       }
     ],
     "configuration": {
