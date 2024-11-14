@@ -1,8 +1,8 @@
 {
   "name": "crayon-box",
-  "displayName": "蜡笔小箱",
+  "displayName": "CrayonBox",
   "description": "CrayonBox（蜡笔小箱），可以实时查看 虚拟币、股票 的交易数据，助你实现更好的投资",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "GPL-3.0-only",
   "publisher": "naomi233",
   "author": "Naomi <33375791+Henvy-Mango@users.noreply.github.com>",
@@ -20,6 +20,7 @@
     "stock",
     "binance",
     "CrayonBox",
+    "蜡笔小箱",
     "股票",
     "虚拟币"
   ],
