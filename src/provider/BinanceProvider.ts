@@ -8,10 +8,10 @@ import BinanceService from '~/service/BinanceService'
 export default class BinanceProvider extends BaseProvider {
     private binanceService = new BinanceService()
 
-    symbols = config.binance.symbols ?? []
-    order = config.binance.order ?? 0
+    symbols = config.binance.symbols || []
+    order = config.binance.order || 0
 
-    windowSize = config.binance.windowSize ?? '1d'
+    windowSize = config.binance.windowSize || '1d'
 
     async get() {
         if (this.symbols.length === 0) {

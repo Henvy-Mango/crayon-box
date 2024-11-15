@@ -9,8 +9,8 @@ import StockService from '~/service/StockService'
 export default class StockProvider extends BaseProvider {
     private stockService = new StockService()
 
-    symbols = config.stock.symbols ?? []
-    order = config.stock.order ?? 0
+    symbols = config.stock.symbols || []
+    order = config.stock.order || 0
 
     async get() {
         if (this.symbols.length === 0) {

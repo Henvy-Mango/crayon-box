@@ -134,7 +134,7 @@ export default class StatusBar {
             `「${name}」\t${name === symbol ? '' : symbol} ${provider === 'binance' ? `${this.binanceProvider.windowSize} 滑动窗口` : ''}`,
             `涨跌：${sign}${priceChange}\t百分：${sign}${priceChangePercent}%`,
             `最高：${highPrice}\t最低：${lowPrice}`,
-            `开价：${openPrice}\t昨收：${prevClosePrice ?? 'N/A'}`,
+            `开价：${openPrice}\t昨收：${prevClosePrice || 'N/A'}`,
             `成交额：${volume}`,
             `更新时间：${closeTime}`,
         ].join('\n')
