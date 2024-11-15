@@ -74,7 +74,7 @@ export default class StatusBar {
 
         providerData.forEach((providerItem, i) => {
             const item = this.binanceStatusBarList[i]
-            item.command = 'crayon-box.addBinance'
+            item.command = 'crayon-box.addBinanceToStatusBar'
             item.text = this.getProviderText(providerItem)
             item.tooltip = this.getProviderTooltip(providerItem)
             item.show()
@@ -97,7 +97,7 @@ export default class StatusBar {
 
         providerData.forEach((providerItem, i) => {
             const item = this.stockStatusBarList[i]
-            item.command = 'crayon-box.addStock'
+            item.command = 'crayon-box.addStockToStatusBar'
             item.text = this.getProviderText(providerItem)
             item.tooltip = this.getProviderTooltip(providerItem)
             item.show()
