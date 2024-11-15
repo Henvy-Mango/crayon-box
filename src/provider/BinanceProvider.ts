@@ -1,8 +1,9 @@
 import dayjs from 'dayjs'
 
 import config from '~/utils/config'
-import { formatNumber } from '~/utils/helper'
 import BaseProvider from './BaseProvider'
+import { notified } from '~/utils/notify'
+import { formatNumber } from '~/utils/helper'
 import BinanceService from '~/service/BinanceService'
 
 export default class BinanceProvider extends BaseProvider {
@@ -27,7 +28,7 @@ export default class BinanceProvider extends BaseProvider {
         }
 
         return result.map((o) => {
-            return {
+            const data = {
                 provider: 'binance',
                 symbol: o.symbol,
                 name: o.symbol,
@@ -42,6 +43,10 @@ export default class BinanceProvider extends BaseProvider {
                 closeTime: dayjs(o.closeTime).format('YYYY-MM-DD HH:mm:ss'),
                 volume: formatNumber(o.volume),
             }
+
+            notified(data)
+
+            return data
         })
     }
 

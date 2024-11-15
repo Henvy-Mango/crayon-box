@@ -28,4 +28,9 @@ export type PluginConfig = {
         symbols: string[]
         order: number
     }
+    remind: {
+        symbol: string
+        price: string | number
+        percent: string | number
+    }[]
 }

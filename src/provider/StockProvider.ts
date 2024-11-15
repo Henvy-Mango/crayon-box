@@ -2,8 +2,9 @@ import dayjs from 'dayjs'
 import BigNumber from 'bignumber.js'
 
 import config from '~/utils/config'
-import { formatNumber } from '~/utils/helper'
 import BaseProvider from './BaseProvider'
+import { notified } from '~/utils/notify'
+import { formatNumber } from '~/utils/helper'
 import StockService from '~/service/StockService'
 
 export default class StockProvider extends BaseProvider {
@@ -44,7 +45,7 @@ export default class StockProvider extends BaseProvider {
                 const lowPrice = formatNumber(params[5])
                 const volume = BigNumber(params[9]).div(10000).toFixed(2)
 
-                return {
+                const data = {
                     provider: 'stock',
                     symbol: code,
                     name: params[0],
@@ -58,6 +59,10 @@ export default class StockProvider extends BaseProvider {
                     closeTime: dayjs(`${params[30]} ${params[31]}`).format('YYYY-MM-DD HH:mm:ss'),
                     volume: volume.toString(),
                 }
+
+                notified(data)
+
+                return data
             })
     }
 
