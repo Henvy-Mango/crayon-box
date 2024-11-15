@@ -5,14 +5,14 @@ import * as vscode from 'vscode'
 import config from '~/utils/config'
 import StatusBar from '~/ui/statusBar'
 import StockProvider from '~/provider/StockProvider'
-import BinnaceProvider from '~/provider/BinnaceProvider'
+import BinanceProvider from '~/provider/BinanceProvider'
 
 let timmer: NodeJS.Timeout
 
 export function activate({ subscriptions }: vscode.ExtensionContext) {
-    const binnaceProvider = new BinnaceProvider()
+    const binanceProvider = new BinanceProvider()
     const stockProvider = new StockProvider()
-    const statusBar = new StatusBar(binnaceProvider, stockProvider)
+    const statusBar = new StatusBar(binanceProvider, stockProvider)
     subscriptions.push(statusBar)
 
     timmer = setInterval(() => statusBar.refresh(), config.interval)
@@ -41,7 +41,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                 let debounce: NodeJS.Timeout | null = null
 
                 const quickPick = vscode.window.createQuickPick()
-                quickPick.placeholder = 'Search binance'
+                quickPick.placeholder = 'Search symbol in binance and add it to status bar'
                 quickPick.onDidChangeValue(async (value) => {
                     quickPick.busy = true
                     if (debounce) {
@@ -49,7 +49,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                         debounce = null
                     }
                     debounce = setTimeout(async () => {
-                        quickPick.items = await binnaceProvider.suggest(value)
+                        quickPick.items = await binanceProvider.suggest(value)
                         quickPick.busy = false
                     }, 100)
                 })
@@ -73,7 +73,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                 let debounce: NodeJS.Timeout | null = null
 
                 const quickPick = vscode.window.createQuickPick()
-                quickPick.placeholder = 'Search stock'
+                quickPick.placeholder = 'Search symbol in stock and add it to status bar'
                 quickPick.onDidChangeValue(async (value) => {
                     quickPick.busy = true
                     if (debounce) {

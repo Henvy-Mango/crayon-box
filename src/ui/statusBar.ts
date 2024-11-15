@@ -2,7 +2,7 @@ import * as vscode from 'vscode'
 
 import config from '~/utils/config'
 import StockProvider from '~/provider/StockProvider'
-import BinnaceProvider from '~/provider/BinnaceProvider'
+import BinanceProvider from '~/provider/BinanceProvider'
 import { isTradingDay, isTradingHours } from '~/utils/helper'
 
 import type { ProviderItem } from '~/types'
@@ -11,14 +11,14 @@ export default class StatusBar {
     private visible = true
     private isTradingDay = true
 
-    private binnaceProvider: BinnaceProvider
-    private binnaceStatusBarList: vscode.StatusBarItem[] = []
+    private binanceProvider: BinanceProvider
+    private binanceStatusBarList: vscode.StatusBarItem[] = []
 
     private stockProvider: StockProvider
     private stockStatusBarList: vscode.StatusBarItem[] = []
 
-    constructor(binnaceProvider: BinnaceProvider, stockProvider: StockProvider) {
-        this.binnaceProvider = binnaceProvider
+    constructor(binanceProvider: BinanceProvider, stockProvider: StockProvider) {
+        this.binanceProvider = binanceProvider
         this.stockProvider = stockProvider
 
         if (config.enabled) {
@@ -30,12 +30,12 @@ export default class StatusBar {
         const that = this
         isTradingDay().then((o) => (that.isTradingDay = o))
 
-        this.initBinnaceStatusBar()
+        this.initBinanceStatusBar()
         this.initStockStatusBar()
     }
 
     dispose() {
-        this.binnaceStatusBarList.forEach((i) => i.dispose())
+        this.binanceStatusBarList.forEach((i) => i.dispose())
     }
 
     refresh() {
@@ -45,11 +45,11 @@ export default class StatusBar {
             this.refreshStockStatusBar()
         }
 
-        this.refreshBinnaceStatusBar()
+        this.refreshBinanceStatusBar()
     }
 
     toggle() {
-        const statusBarList = [...this.binnaceStatusBarList, ...this.stockStatusBarList]
+        const statusBarList = [...this.binanceStatusBarList, ...this.stockStatusBarList]
         this.visible = !this.visible
         if (this.visible) {
             statusBarList.forEach((i) => i.show())
@@ -58,22 +58,23 @@ export default class StatusBar {
         }
     }
 
-    initBinnaceStatusBar() {
-        this.binnaceProvider.symbols.forEach(() => {
-            const binnaceStatusBar = vscode.window.createStatusBarItem(
+    initBinanceStatusBar() {
+        this.binanceProvider.symbols.forEach(() => {
+            const binanceStatusBar = vscode.window.createStatusBarItem(
                 vscode.StatusBarAlignment.Left,
-                this.binnaceProvider.order
+                this.binanceProvider.order
             )
-            this.binnaceStatusBarList.push(binnaceStatusBar)
+            this.binanceStatusBarList.push(binanceStatusBar)
         })
-        this.refreshBinnaceStatusBar()
+        this.refreshBinanceStatusBar()
     }
 
-    async refreshBinnaceStatusBar() {
-        const providerData = await this.binnaceProvider.get()
+    async refreshBinanceStatusBar() {
+        const providerData = await this.binanceProvider.get()
 
         providerData.forEach((providerItem, i) => {
-            const item = this.binnaceStatusBarList[i]
+            const item = this.binanceStatusBarList[i]
+            item.command = 'crayon-box.addBinance'
             item.text = this.getProviderText(providerItem)
             item.tooltip = this.getProviderTooltip(providerItem)
             item.show()
@@ -96,6 +97,7 @@ export default class StatusBar {
 
         providerData.forEach((providerItem, i) => {
             const item = this.stockStatusBarList[i]
+            item.command = 'crayon-box.addStock'
             item.text = this.getProviderText(providerItem)
             item.tooltip = this.getProviderTooltip(providerItem)
             item.show()
@@ -129,7 +131,7 @@ export default class StatusBar {
         const isIncrease = Number(priceChangePercent) > 0
         const sign = isIncrease ? '+' : ''
         return [
-            `「${name}」\t${name === symbol ? '' : symbol} ${provider === 'binnace' ? `${this.binnaceProvider.windowSize} 滑动窗口` : ''}`,
+            `「${name}」\t${name === symbol ? '' : symbol} ${provider === 'binance' ? `${this.binanceProvider.windowSize} 滑动窗口` : ''}`,
             `涨跌：${sign}${priceChange}\t百分：${sign}${priceChangePercent}%`,
             `最高：${highPrice}\t最低：${lowPrice}`,
             `开价：${openPrice}\t昨收：${prevClosePrice ?? 'N/A'}`,

@@ -3,9 +3,9 @@ import dayjs from 'dayjs'
 import config from '~/utils/config'
 import { formatNumber } from '~/utils/helper'
 import BaseProvider from './BaseProvider'
-import BinanceService from '~/service/BinnaceService'
+import BinanceService from '~/service/BinanceService'
 
-export default class BinnaceProvider extends BaseProvider {
+export default class BinanceProvider extends BaseProvider {
     private binanceService = new BinanceService()
 
     symbols = config.binance.symbols ?? []
@@ -28,7 +28,7 @@ export default class BinnaceProvider extends BaseProvider {
 
         return result.map((o) => {
             return {
-                provider: 'binnace',
+                provider: 'binance',
                 symbol: o.symbol,
                 name: o.symbol,
                 lastPrice: formatNumber(o.lastPrice),
@@ -58,7 +58,7 @@ export default class BinnaceProvider extends BaseProvider {
             return {
                 label: o.symbol,
                 detail: o.symbol,
-                description: 'binnace',
+                description: 'binance',
             }
         })
     }
