@@ -22,7 +22,7 @@ export type PluginConfig = {
         symbols: string[]
         order: number
         apiUrl: string
-        windowSize: '1m' | '15m' | '30m' | '1h' | '4h' | '1d'
+        windowSize: '1m' | '15m' | '30m' | '1h' | '4h' | '6h' | '12h' | '1d'
     }
     stock: {
         symbols: string[]
