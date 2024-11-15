@@ -53,7 +53,9 @@
 
 ## 快捷命令
 
-- `crayon-box.toggle`：显示/隐藏底部状态栏
+- `crayon-box.toggleStatusBar`：显示/隐藏底部状态栏
+- `crayon-box.addBinanceToStatusBar`: 添加自选虚拟币
+- `crayon-box.addStockToStatusBar`: 添加自选股票
 
 ## 更新日志
 
@@ -61,8 +63,8 @@
 
 ## Todo
 
-- [ ] 涨跌幅消息通知
 - [x] 通过 GUI 配置自选虚拟币、股票
+- [ ] 涨跌幅消息通知
 
 ## 致谢
 

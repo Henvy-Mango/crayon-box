@@ -36,7 +36,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                 statusBar.toggle()
             }),
 
-            vscode.commands.registerCommand('crayon-box.addBinance', async () => {
+            vscode.commands.registerCommand('crayon-box.addBinanceToStatusBar', async () => {
                 let symbol: string | undefined
                 let debounce: NodeJS.Timeout | null = null
 
@@ -68,7 +68,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                 quickPick.show()
             }),
 
-            vscode.commands.registerCommand('crayon-box.addStock', async () => {
+            vscode.commands.registerCommand('crayon-box.addStockToStatusBar', async () => {
                 let symbol: string | undefined
                 let debounce: NodeJS.Timeout | null = null
 

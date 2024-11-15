@@ -43,12 +43,12 @@
         "title": "Toggle Status Bar Visibility"
       },
       {
-        "command": "crayon-box.addBinance",
+        "command": "crayon-box.addBinanceToStatusBar",
         "category": "CrayonBox",
         "title": "Add Binance Symbol to Status Bar"
       },
       {
-        "command": "crayon-box.addStock",
+        "command": "crayon-box.addStockToStatusBar",
         "category": "CrayonBox",
         "title": "Add Stock Symbol to Status Bar"
       }
