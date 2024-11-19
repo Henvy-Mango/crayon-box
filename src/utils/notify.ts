@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import * as vscode from 'vscode'
 import BigNumber from 'bignumber.js'
 
@@ -70,7 +71,7 @@ export async function addRemind() {
     return state
 }
 
-const remindPrecentRecord: Record<string, boolean> = {}
+const remindPercentRecord: Record<string, boolean> = {}
 const remindPriceRecord: Record<string, boolean> = {}
 
 export async function notified({ symbol, name, lastPrice, priceChangePercent }: ProviderItem) {
@@ -81,31 +82,31 @@ export async function notified({ symbol, name, lastPrice, priceChangePercent }: 
     }
 
     const nowPrice = BigNumber(lastPrice)
-    const nowPrecent = BigNumber(priceChangePercent) ?? BigNumber(0)
+    const nowPercent = BigNumber(priceChangePercent)
 
-    const notifiedPrice = BigNumber(state.price)
-    const notifiedPrecent = BigNumber(state.percent)
-
-    const isIncrease = nowPrecent.gt(0)
+    const notifiedPrice = BigNumber(state.price) ?? BigNumber(0)
+    const notifiedPercent = BigNumber(state.percent) ?? BigNumber(0)
 
     const shouldNotifyPercent =
-        (notifiedPrecent.gt(0) && nowPrecent.gt(notifiedPrecent)) ||
-        (notifiedPrecent.lt(0) && nowPrecent.lt(notifiedPrecent))
+        (notifiedPercent.gt(0) && nowPercent.gte(notifiedPercent)) ||
+        (notifiedPercent.lt(0) && nowPercent.lte(notifiedPercent))
 
     const shouldNotifyPrice =
-        (nowPrecent.gt(0) && nowPrice.gt(notifiedPrice)) || (nowPrecent.lt(0) && nowPrice.lt(notifiedPrice))
+        (notifiedPrice.gt(0) && nowPrice.gte(notifiedPrice)) || (notifiedPrice.lt(0) && nowPrice.lte(notifiedPrice))
 
-    if (shouldNotifyPercent && !remindPrecentRecord[symbol]) {
+    const date = dayjs().format('HH:mm:ss')
+
+    if (shouldNotifyPercent && !remindPercentRecord[symbol]) {
         vscode.window.showInformationMessage(
-            `「${name}」Price Change Percent is ${isIncrease ? 'increased' : 'decreased'} to ${nowPrecent}%`
+            `「${name}」Price Change Percent is ${notifiedPercent.gt(0) ? 'increased' : 'decreased'} to ${nowPercent}% at ${date}`
         )
-        remindPrecentRecord[symbol] = true
-        setTimeout(() => (remindPrecentRecord[symbol] = false), 1000 * 60 * 5)
+        remindPercentRecord[symbol] = true
+        setTimeout(() => (remindPercentRecord[symbol] = false), 1000 * 60 * 5)
     }
 
     if (shouldNotifyPrice && !remindPriceRecord[symbol]) {
         vscode.window.showInformationMessage(
-            `「${name}」Price is ${isIncrease ? 'increased' : 'decreased'} to ${nowPrice}`
+            `「${name}」Price is ${notifiedPrice.gt(0) ? 'increased' : 'decreased'} to ${nowPrice} at ${date}`
         )
         remindPriceRecord[symbol] = true
         setTimeout(() => (remindPriceRecord[symbol] = false), 1000 * 60 * 5)
