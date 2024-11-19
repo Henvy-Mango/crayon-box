@@ -38,9 +38,9 @@ export default class StockProvider extends BaseProvider {
 
                 const priceChange = BigNumber(params[3]).minus(BigNumber(params[2]))
                 const priceChangePercent = priceChange.div(BigNumber(params[2])).multipliedBy(100).toFixed(3)
-                const lastPrice = formatNumber(params[3])
                 const openPrice = formatNumber(params[1])
                 const prevClosePrice = formatNumber(params[2])
+                const lastPrice = BigNumber(params[3]).gt(0) ? formatNumber(params[3]) : prevClosePrice
                 const highPrice = formatNumber(params[4])
                 const lowPrice = formatNumber(params[5])
                 const volume = BigNumber(params[9]).div(10000).toFixed(2)
