@@ -4,6 +4,12 @@ All notable changes to the extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.4] - 2024-11-19
+
+- feat: add notification
+- feat: update command
+- fix: last price is zero
+
 ## [0.0.3] - 2024-11-14
 
 - feat: gui add symbol

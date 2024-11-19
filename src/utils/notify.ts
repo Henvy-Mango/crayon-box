@@ -81,7 +81,7 @@ export async function notified({ symbol, name, lastPrice, priceChangePercent }: 
     }
 
     const nowPrice = BigNumber(lastPrice)
-    const nowPrecent = BigNumber(priceChangePercent)
+    const nowPrecent = BigNumber(priceChangePercent) ?? BigNumber(0)
 
     const notifiedPrice = BigNumber(state.price)
     const notifiedPrecent = BigNumber(state.percent)
