@@ -70,10 +70,12 @@ export async function addRemind() {
     return state
 }
 
+const remindPrecentRecord: Record<string, boolean> = {}
+const remindPriceRecord: Record<string, boolean> = {}
+
 export async function notified({ symbol, name, lastPrice, priceChangePercent }: ProviderItem) {
     const state = config.remind.find((o) => o.symbol === symbol)
 
-    // todo add interval
     if (!state) {
         return
     }
@@ -93,15 +95,19 @@ export async function notified({ symbol, name, lastPrice, priceChangePercent }: 
     const shouldNotifyPrice =
         (nowPrecent.gt(0) && nowPrice.gt(notifiedPrice)) || (nowPrecent.lt(0) && nowPrice.lt(notifiedPrice))
 
-    if (shouldNotifyPercent) {
+    if (shouldNotifyPercent && !remindPrecentRecord[symbol]) {
         vscode.window.showInformationMessage(
             `「${name}」Price Change Percent is ${isIncrease ? 'increased' : 'decreased'} to ${nowPrecent}%`
         )
+        remindPrecentRecord[symbol] = true
+        setTimeout(() => (remindPrecentRecord[symbol] = false), 1000 * 60 * 5)
     }
 
-    if (shouldNotifyPrice) {
+    if (shouldNotifyPrice && !remindPriceRecord[symbol]) {
         vscode.window.showInformationMessage(
             `「${name}」Price is ${isIncrease ? 'increased' : 'decreased'} to ${nowPrice}`
         )
+        remindPriceRecord[symbol] = true
+        setTimeout(() => (remindPriceRecord[symbol] = false), 1000 * 60 * 5)
     }
 }
