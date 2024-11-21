@@ -137,10 +137,12 @@
                 "type": "string"
               },
               "price": {
-                "type": "number"
+                "type": "number",
+                "default": 0
               },
               "percent": {
-                "type": "number"
+                "type": "number",
+                "default": 0
               }
             }
           }
