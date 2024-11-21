@@ -63,6 +63,35 @@
 | `price`   | `number` |   0    | 大于0时，上涨超过指定值通知；小于0时，下跌超过指定值通知 |
 | `percent` | `number` |   0    | 大于0时，涨幅超过指定值通知；小于0时，跌幅超过指定值通知 |
 
+### 配置示例
+
+```json
+{
+  "crayon-box.binance": {
+    "symbols": ["BTCUSDT", "ETHUSDT"],
+    "order": 0,
+    "apiUrl": "https://data-api.binance.vision",
+    "windowSize": "1d"
+  },
+  "crayon-box.stock": {
+    "symbols": ["sh000001"],
+    "order": 1
+  },
+  "crayon-box.remind": [
+    {
+      "symbol": "BTCUSDT",
+      "price": -80000,
+      "percent": -5.0
+    },
+    {
+      "symbol": "sh000001",
+      "price": 3000,
+      "percent": 2.2
+    }
+  ]
+}
+```
+
 ## 快捷命令
 
 - `crayon-box.toggleStatusBar`：显示/隐藏底部状态栏
