@@ -95,7 +95,8 @@ export async function notified({ symbol, name, lastPrice, priceChangePercent }: 
         (notifiedPercent.lt(0) && nowPercent.lte(notifiedPercent))
 
     const shouldNotifyPrice =
-        (notifiedPrice.gt(0) && nowPrice.gte(notifiedPrice)) || (notifiedPrice.lt(0) && nowPrice.lte(notifiedPrice))
+        (notifiedPrice.gt(0) && nowPrice.gte(notifiedPrice)) ||
+        (notifiedPrice.lt(0) && nowPrice.lte(notifiedPrice.abs()))
 
     const date = dayjs().format('HH:mm:ss')
 
