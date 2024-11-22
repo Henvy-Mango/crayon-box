@@ -9,15 +9,16 @@ import type { PluginConfig, ProviderItem } from '~/types'
 
 export async function addRemind() {
     async function selectSymbol(input: MultiStepInput, state: Partial<PluginConfig['remind'][0]>) {
+        const symbols = [...config.binance.symbols, ...config.stock.symbols]
         const pick = await input.showQuickPick({
             title,
             step: 1,
             totalSteps: 3,
             placeholder: 'Select a symbol',
-            items: config.binance.symbols.map((o) => {
+            items: symbols.map((o) => {
                 return { label: o, description: o }
             }),
-            shouldResume: () => Promise.resolve(false),
+            shouldResume: () => new Promise<boolean>(() => {}),
         })
         if (pick) {
             state.symbol = pick.label
@@ -26,53 +27,55 @@ export async function addRemind() {
     }
 
     async function inputPrice(input: MultiStepInput, state: Partial<PluginConfig['remind'][0]>) {
-        state.price = await input.showInputBox({
-            title,
-            step: 2,
-            totalSteps: 3,
-            value: state.price?.toString() || '',
-            placeholder: 'Input a price, such as 10000',
-            prompt: 'You will be notified of the price upon arrival',
-            validate: (value) => Promise.resolve(Number(value) ? undefined : 'Price must be a number'),
-            shouldResume: () => Promise.resolve(false),
-        })
+        state.price = Number(
+            await input.showInputBox({
+                title,
+                step: 2,
+                totalSteps: 3,
+                value: state.price?.toString() || '0',
+                placeholder: 'Input a price, such as 1000 or -1000. Zero means you will not be notified.',
+                prompt: 'You will be notified when it increases or decreases to the specified price.',
+                validate: (value) => Promise.resolve(isNaN(Number(value)) ? 'Price must be a number' : undefined),
+                shouldResume: () => new Promise<boolean>(() => {}),
+            })
+        )
         return (input: MultiStepInput) => inputPercent(input, state)
     }
 
     async function inputPercent(input: MultiStepInput, state: Partial<PluginConfig['remind'][0]>) {
-        state.percent = await input.showInputBox({
-            title,
-            step: 3,
-            totalSteps: 3,
-            value: state.percent?.toString() || '',
-            placeholder: 'Input a percentage, such as 0.1',
-            prompt: 'You will be notified of the percentage upon arrival',
-            validate: (value) => Promise.resolve(Number(value) ? undefined : 'percentage must be a number'),
-            shouldResume: () => Promise.resolve(false),
-        })
+        state.percent = Number(
+            await input.showInputBox({
+                title,
+                step: 3,
+                totalSteps: 3,
+                value: state.percent?.toString() || '0',
+                placeholder: 'Input a percentage, such as 0.1 or -0.1. Zero means you will not be notified.',
+                prompt: 'You will be notified when it increases or decreases to the specified percentage.',
+                validate: (value) => Promise.resolve(isNaN(Number(value)) ? 'percentage must be a number' : undefined),
+                shouldResume: () => new Promise<boolean>(() => {}),
+            })
+        )
     }
 
     async function collectInputs(step: (input: MultiStepInput, state: Partial<PluginConfig['remind'][0]>) => any) {
         const state = {} as Partial<PluginConfig['remind'][0]>
         await MultiStepInput.run((input) => step(input, state))
-        return state as PluginConfig['remind']
+        return state as PluginConfig['remind'][0]
     }
 
-    const title = 'Add Notification'
-    let state
-
+    const title = 'CrayonBox: Add Remind to Symbol'
+    let state: PluginConfig['remind'][0] | undefined
     try {
         state = await collectInputs(selectSymbol)
     } catch (error) {
         console.log(error)
     }
-
-    console.log(state)
-    return state
+    if (!state) return
+    config.update('remind', [...config.remind, state], true)
 }
 
-const remindPercentRecord: Record<string, boolean> = {}
-const remindPriceRecord: Record<string, boolean> = {}
+const percentRecord: Record<string, boolean> = {}
+const priceRecord: Record<string, boolean> = {}
 
 export async function notified({ symbol, name, lastPrice, priceChangePercent }: ProviderItem) {
     const state = config.remind.find((o) => o.symbol === symbol)
@@ -96,19 +99,19 @@ export async function notified({ symbol, name, lastPrice, priceChangePercent }: 
 
     const date = dayjs().format('HH:mm:ss')
 
-    if (shouldNotifyPercent && !remindPercentRecord[symbol]) {
+    if (shouldNotifyPercent && !percentRecord[symbol]) {
         vscode.window.showInformationMessage(
             `「${name}」Price Change Percent is ${notifiedPercent.gt(0) ? 'increased' : 'decreased'} to ${nowPercent}% at ${date}`
         )
-        remindPercentRecord[symbol] = true
-        setTimeout(() => (remindPercentRecord[symbol] = false), 1000 * 60 * 5)
+        percentRecord[symbol] = true
+        setTimeout(() => (percentRecord[symbol] = false), 1000 * 60 * 5)
     }
 
-    if (shouldNotifyPrice && !remindPriceRecord[symbol]) {
+    if (shouldNotifyPrice && !priceRecord[symbol]) {
         vscode.window.showInformationMessage(
             `「${name}」Price is ${notifiedPrice.gt(0) ? 'increased' : 'decreased'} to ${nowPrice} at ${date}`
         )
-        remindPriceRecord[symbol] = true
-        setTimeout(() => (remindPriceRecord[symbol] = false), 1000 * 60 * 5)
+        priceRecord[symbol] = true
+        setTimeout(() => (priceRecord[symbol] = false), 1000 * 60 * 5)
     }
 }

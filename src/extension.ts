@@ -4,6 +4,7 @@ import * as vscode from 'vscode'
 
 import config from '~/utils/config'
 import StatusBar from '~/ui/statusBar'
+import { addRemind } from '~/utils/remind'
 import StockProvider from '~/provider/StockProvider'
 import BinanceProvider from '~/provider/BinanceProvider'
 
@@ -99,6 +100,8 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                 })
                 quickPick.show()
             }),
+
+            vscode.commands.registerCommand('crayon-box.addRemind', async () => addRemind()),
         ]
     )
 }

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 
 import config from '~/utils/config'
 import BaseProvider from './BaseProvider'
-import { notified } from '~/utils/notify'
+import { notified } from '~/utils/remind'
 import { formatNumber } from '~/utils/helper'
 import StockService from '~/service/StockService'
 

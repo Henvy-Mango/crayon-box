@@ -51,6 +51,11 @@
         "command": "crayon-box.addStockToStatusBar",
         "category": "CrayonBox",
         "title": "Add Stock Symbol to Status Bar"
+      },
+      {
+        "command": "crayon-box.addRemind",
+        "category": "CrayonBox",
+        "title": "Add Remind to Symbol"
       }
     ],
     "configuration": {

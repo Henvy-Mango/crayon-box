@@ -97,6 +97,7 @@
 - `crayon-box.toggleStatusBar`：显示/隐藏底部状态栏
 - `crayon-box.addBinanceToStatusBar`: 添加自选虚拟币
 - `crayon-box.addStockToStatusBar`: 添加自选股票
+- `crayon-box.addRemind`: 添加涨跌幅消息通知
 
 ## 更新日志
 
