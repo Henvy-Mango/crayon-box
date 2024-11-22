@@ -4,6 +4,12 @@ All notable changes to the extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.6] - 2024-11-22
+
+- feat: add remind command
+- docs: add json example
+- docs: tweaks
+
 ## [0.0.5] - 2024-11-19
 
 - feat: change remind config logic
