@@ -86,7 +86,7 @@
     {
       "symbol": "sh000001",
       "price": 3000,
-      "percent": 2.2
+      "percent": 0
     }
   ]
 }

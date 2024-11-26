@@ -131,12 +131,12 @@ export default class StatusBar {
         const isIncrease = Number(priceChangePercent) > 0
         const sign = isIncrease ? '+' : ''
         return [
-            `「${name}」\t${name === symbol ? '' : symbol} ${provider === 'binance' ? `${this.binanceProvider.windowSize} 滑动窗口` : ''}`,
-            `涨跌：${sign}${priceChange}\t百分：${sign}${priceChangePercent}%`,
-            `最高：${highPrice}\t最低：${lowPrice}`,
-            `开价：${openPrice}\t昨收：${prevClosePrice || 'N/A'}`,
-            `成交额：${volume}`,
-            `更新时间：${closeTime}`,
+            `「${name}」\t${name === symbol ? '' : symbol} ${provider === 'binance' ? `${this.binanceProvider.windowSize} ${vscode.l10n.t('Sliding Window')}` : ''}`,
+            `${vscode.l10n.t('Change')}：${sign}${priceChange}\t${vscode.l10n.t('Change Percent')}：${sign}${priceChangePercent}%`,
+            `${vscode.l10n.t('High')}：${highPrice}\t${vscode.l10n.t('Low')}：${lowPrice}`,
+            `${vscode.l10n.t('Open')}：${openPrice}\t${vscode.l10n.t('Perv Close')}：${prevClosePrice || 'N/A'}`,
+            `${vscode.l10n.t('Volume')}：${volume}`,
+            `${vscode.l10n.t('Last Update')}：${closeTime}`,
         ].join('\n')
     }
 }

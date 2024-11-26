@@ -1,0 +1,6 @@
+{
+    "extension.crayon-box.command.toggleStatusBar.title": "Toggle Status Bar Visibility",
+    "extension.crayon-box.command.addBinanceToStatusBar.title": "Add Binance Symbol to Status Bar",
+    "extension.crayon-box.command.addStockToStatusBar.title": "Add Stock Symbol to Status Bar",
+    "extension.crayon-box.command.addRemind.title": "Add Remind to Symbol"
+}

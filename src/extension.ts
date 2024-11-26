@@ -26,7 +26,9 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                     return
                 }
                 vscode.window
-                    .showInformationMessage('Configuration has been changed, click to reload.', { title: 'Reload' })
+                    .showInformationMessage(vscode.l10n.t('Configuration has been changed, click to reload'), {
+                        title: vscode.l10n.t('Reload'),
+                    })
                     .then((item) => {
                         if (!item) return
                         vscode.commands.executeCommand('workbench.action.reloadWindow')
@@ -42,7 +44,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                 let debounce: NodeJS.Timeout | null = null
 
                 const quickPick = vscode.window.createQuickPick()
-                quickPick.placeholder = 'Search symbol in binance and add it to status bar'
+                quickPick.placeholder = vscode.l10n.t('Search symbol in binance and add it to status bar')
                 quickPick.onDidChangeValue(async (value) => {
                     quickPick.busy = true
                     if (debounce) {
@@ -74,7 +76,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                 let debounce: NodeJS.Timeout | null = null
 
                 const quickPick = vscode.window.createQuickPick()
-                quickPick.placeholder = 'Search symbol in stock and add it to status bar'
+                quickPick.placeholder = vscode.l10n.t('Search symbol in stock and add it to status bar')
                 quickPick.onDidChangeValue(async (value) => {
                     quickPick.busy = true
                     if (debounce) {

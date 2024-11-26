@@ -1,0 +1,6 @@
+{
+    "extension.crayon-box.command.toggleStatusBar.title": "开关状态栏",
+    "extension.crayon-box.command.addBinanceToStatusBar.title": "添加虚拟币代码到状态栏",
+    "extension.crayon-box.command.addStockToStatusBar.title": "添加股票代码到状态栏",
+    "extension.crayon-box.command.addRemind.title": "添加价格涨跌幅提醒"
+}

@@ -14,7 +14,7 @@ export async function addRemind() {
             title,
             step: 1,
             totalSteps: 3,
-            placeholder: 'Select a symbol',
+            placeholder: vscode.l10n.t('Select a symbol'),
             items: symbols.map((o) => {
                 return { label: o, description: o }
             }),
@@ -33,9 +33,18 @@ export async function addRemind() {
                 step: 2,
                 totalSteps: 3,
                 value: state.price?.toString() || '0',
-                placeholder: 'Input a price, such as 1000 or -1000. Zero means you will not be notified.',
-                prompt: 'You will be notified when it increases or decreases to the specified price.',
-                validate: (value) => Promise.resolve(isNaN(Number(value)) ? 'Price must be a number' : undefined),
+                placeholder: vscode.l10n.t(
+                    'Input a price, such as 1000 or -1000; {0}',
+                    vscode.l10n.t('Zero means you will not be notified')
+                ),
+                prompt: vscode.l10n.t(
+                    'You will be notified when it increases or decreases to the specified {0}',
+                    vscode.l10n.t('Price')
+                ),
+                validate: (value) =>
+                    Promise.resolve(
+                        isNaN(Number(value)) ? vscode.l10n.t('{0} must be a number', vscode.l10n.t('Price')) : undefined
+                    ),
                 shouldResume: () => new Promise<boolean>(() => {}),
             })
         )
@@ -49,9 +58,20 @@ export async function addRemind() {
                 step: 3,
                 totalSteps: 3,
                 value: state.percent?.toString() || '0',
-                placeholder: 'Input a percentage, such as 0.1 or -0.1. Zero means you will not be notified.',
-                prompt: 'You will be notified when it increases or decreases to the specified percentage.',
-                validate: (value) => Promise.resolve(isNaN(Number(value)) ? 'percentage must be a number' : undefined),
+                placeholder: vscode.l10n.t(
+                    'Input a percentage, such as 0.1 or -0.1; {0}',
+                    vscode.l10n.t('Zero means you will not be notified')
+                ),
+                prompt: vscode.l10n.t(
+                    'You will be notified when it increases or decreases to the specified {0}',
+                    vscode.l10n.t('Percentage')
+                ),
+                validate: (value) =>
+                    Promise.resolve(
+                        isNaN(Number(value))
+                            ? vscode.l10n.t('{0} must be a number', vscode.l10n.t('Percentage'))
+                            : undefined
+                    ),
                 shouldResume: () => new Promise<boolean>(() => {}),
             })
         )
@@ -63,7 +83,7 @@ export async function addRemind() {
         return state as PluginConfig['remind'][0]
     }
 
-    const title = 'CrayonBox: Add Remind to Symbol'
+    const title = 'CrayonBox: ' + vscode.l10n.t('Add Remind to Symbol')
     let state: PluginConfig['remind'][0] | undefined
     try {
         state = await collectInputs(selectSymbol)
@@ -102,7 +122,12 @@ export async function notified({ symbol, name, lastPrice, priceChangePercent }: 
 
     if (shouldNotifyPercent && !percentRecord[symbol]) {
         vscode.window.showInformationMessage(
-            `「${name}」Price Change Percent is ${notifiedPercent.gt(0) ? 'increased' : 'decreased'} to ${nowPercent}% at ${date}`
+            vscode.l10n.t('「{name}」Price Change Percent is {trend} to {percent}% at {date}', {
+                name,
+                trend: notifiedPercent.gt(0) ? vscode.l10n.t('increased') : vscode.l10n.t('decreased'),
+                percent: nowPercent,
+                date,
+            })
         )
         percentRecord[symbol] = true
         setTimeout(() => (percentRecord[symbol] = false), 1000 * 60 * 5)
@@ -110,7 +135,12 @@ export async function notified({ symbol, name, lastPrice, priceChangePercent }: 
 
     if (shouldNotifyPrice && !priceRecord[symbol]) {
         vscode.window.showInformationMessage(
-            `「${name}」Price is ${notifiedPrice.gt(0) ? 'increased' : 'decreased'} to ${nowPrice} at ${date}`
+            vscode.l10n.t('「{name}」Price is {trend} to {price} at {date}', {
+                name,
+                trend: notifiedPrice.gt(0) ? vscode.l10n.t('increased') : vscode.l10n.t('decreased'),
+                price: nowPrice,
+                date,
+            })
         )
         priceRecord[symbol] = true
         setTimeout(() => (priceRecord[symbol] = false), 1000 * 60 * 5)

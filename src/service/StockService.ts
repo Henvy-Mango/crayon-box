@@ -1,4 +1,3 @@
-import config from '~/utils/config'
 import { Client } from '~/utils/client'
 
 export default class StockService {

@@ -34,28 +34,29 @@
   "activationEvents": [
     "onStartupFinished"
   ],
+  "l10n": "./l10n",
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "crayon-box.toggleStatusBar",
         "category": "CrayonBox",
-        "title": "Toggle Status Bar Visibility"
+        "title": "%extension.crayon-box.command.toggleStatusBar.title%"
       },
       {
         "command": "crayon-box.addBinanceToStatusBar",
         "category": "CrayonBox",
-        "title": "Add Binance Symbol to Status Bar"
+        "title": "%extension.crayon-box.command.addBinanceToStatusBar.title%"
       },
       {
         "command": "crayon-box.addStockToStatusBar",
         "category": "CrayonBox",
-        "title": "Add Stock Symbol to Status Bar"
+        "title": "%extension.crayon-box.command.addStockToStatusBar.title%"
       },
       {
         "command": "crayon-box.addRemind",
         "category": "CrayonBox",
-        "title": "Add Remind to Symbol"
+        "title": "%extension.crayon-box.command.addRemind.title%"
       }
     ],
     "configuration": {
