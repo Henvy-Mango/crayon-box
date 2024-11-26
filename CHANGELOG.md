@@ -4,6 +4,10 @@ All notable changes to the extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.7] - 2024-11-26
+
+- feat: add l10n
+
 ## [0.0.6] - 2024-11-22
 
 - feat: add remind command
