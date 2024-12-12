@@ -5,6 +5,7 @@ import * as vscode from 'vscode'
 import config from '~/utils/config'
 import StatusBar from '~/ui/statusBar'
 import { addRemind } from '~/utils/remind'
+import globalState from '~/utils/globalState'
 import StockProvider from '~/provider/StockProvider'
 import BinanceProvider from '~/provider/BinanceProvider'
 
@@ -62,9 +63,10 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                 quickPick.onDidAccept(() => {
                     if (!symbol) return
                     const newConfig = {
-                        ...config.binance,
-                        symbols: [...config.binance.symbols, symbol],
+                        ...globalState.binance,
+                        symbols: [...globalState.binance.symbols, symbol],
                     }
+                    globalState.binance = newConfig
                     config.update('binance', newConfig, true)
                     quickPick.dispose()
                 })
@@ -94,9 +96,10 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                 quickPick.onDidAccept(() => {
                     if (!symbol) return
                     const newConfig = {
-                        ...config.stock,
-                        symbols: [...config.stock.symbols, symbol],
+                        ...globalState.stock,
+                        symbols: [...globalState.stock.symbols, symbol],
                     }
+                    globalState.stock = newConfig
                     config.update('stock', newConfig, true)
                     quickPick.dispose()
                 })
