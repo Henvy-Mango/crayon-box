@@ -18,7 +18,17 @@ export default class StockService {
             },
         })
 
-    private searchClient = new Client('https://proxy.finance.qq.com')
-    private searchStock = '/ifzqgtimg/appstock/smartbox/search/get'
-    getSearchStock = (keyword: string) => this.searchClient.getRequset<any>(this.searchStock, { q: keyword })
+    private searchClient = new Client('http://suggest3.sinajs.cn')
+    private searchStock = '/suggest/type=2&key='
+    getSearchStock = (keyword: string) =>
+        this.searchClient.getRequset<any>(this.searchStock + encodeURIComponent(keyword), null, {
+            responseType: 'arraybuffer',
+            transformResponse: [
+                (data) => {
+                    const decoder = new TextDecoder('GB18030')
+                    const body = decoder.decode(new Uint8Array(data))
+                    return body
+                },
+            ],
+        })
 }

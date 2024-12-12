@@ -31,7 +31,7 @@ export default class StockProvider extends BaseProvider {
             .filter((o) => o)
             .map((item) => {
                 const code = item.split('="')[0].split('var hq_str_')[1]
-                if (!/^(sh|sz|bj)/.test(code)) {
+                if (!/^(sh|sz)/.test(code)) {
                     throw new Error('Unsupport code')
                 }
                 const params = item.split('="')[1].split(',')
@@ -79,14 +79,30 @@ export default class StockProvider extends BaseProvider {
             return []
         }
 
-        return result.data.stock
-            .filter((i: string[]) => ['sz', 'sh', 'bj'].includes(i[0]))
-            .map((i: string[]) => {
+        return result
+            .replace('var suggestvalue="', '')
+            .replace('";', '')
+            .split(';')
+            .map((item: string) => {
+                let row = item.split(',')
+                let code: string = row[0]
+                let label: string = row[4]
+                let exchange: string = row[7]
+
+                switch (code.substring(0, 2)) {
+                    case 'sh':
+                    case 'sz':
+                        break
+                    default:
+                        return null
+                }
+
                 return {
-                    label: i[2],
-                    detail: i[0].toLowerCase() + i[1],
-                    description: 'stock',
+                    label: label,
+                    detail: code,
+                    description: exchange,
                 }
             })
+            .filter((o: any) => o)
     }
 }
