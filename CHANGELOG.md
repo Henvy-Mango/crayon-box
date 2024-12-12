@@ -4,6 +4,11 @@ All notable changes to the extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.8] - 2024-12-12
+
+- feat: change stock suggest api
+- fix: add symbols error
+
 ## [0.0.7] - 2024-11-26
 
 - feat: add l10n
