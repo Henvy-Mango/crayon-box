@@ -27,11 +27,13 @@ export default class BinanceService {
     private tickerInfo = '/api/v3/ticker'
     getTickerInfo = (symbols: string[], windowSize: PluginConfig['binance']['windowSize']) =>
         this.client.getRequset<tickerInfoResult>(this.tickerInfo, {
-            symbols: JSON.stringify(symbols),
-            windowSize: windowSize,
+            params: {
+                symbols: JSON.stringify(symbols),
+                windowSize: windowSize,
+            },
         })
 
     private lastPrice = '/api/v3/ticker/price'
     getLastPrice = (symbols?: string[]) =>
-        this.client.getRequset<{ symbol: string; price: string }[]>(this.lastPrice, { symbols })
+        this.client.getRequset<{ symbol: string; price: string }[]>(this.lastPrice, { params: { symbols } })
 }

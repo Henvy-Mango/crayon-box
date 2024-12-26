@@ -4,7 +4,7 @@ export default class StockService {
     private infoClient = new Client('https://hq.sinajs.cn')
     private stockInfo = '/list'
     getStockInfo = (symbols: string[]) =>
-        this.infoClient.getRequset<string>(`${this.stockInfo}=${symbols.join(',')}`, undefined, {
+        this.infoClient.getRequset<string>(`${this.stockInfo}=${symbols.join(',')}`, {
             responseType: 'arraybuffer',
             transformResponse: [
                 (data) => {
@@ -21,7 +21,7 @@ export default class StockService {
     private searchClient = new Client('http://suggest3.sinajs.cn')
     private searchStock = '/suggest/type=2&key='
     getSearchStock = (keyword: string) =>
-        this.searchClient.getRequset<any>(this.searchStock + encodeURIComponent(keyword), null, {
+        this.searchClient.getRequset<any>(this.searchStock + encodeURIComponent(keyword), {
             responseType: 'arraybuffer',
             transformResponse: [
                 (data) => {
