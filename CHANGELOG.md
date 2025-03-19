@@ -4,6 +4,11 @@ All notable changes to the extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.8] - 2025-03-19
+
+- fix: binance config enum
+- chore: update deps
+
 ## [0.0.8] - 2024-12-12
 
 - feat: change stock suggest api
