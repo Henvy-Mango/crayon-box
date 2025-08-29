@@ -21,21 +21,6 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 
     subscriptions.push(
         ...[
-            vscode.workspace.onDidChangeConfiguration((ex) => {
-                const hasChanged = ex.affectsConfiguration('crayon-box')
-                if (!hasChanged) {
-                    return
-                }
-                vscode.window
-                    .showInformationMessage(vscode.l10n.t('Configuration has been changed, click to reload'), {
-                        title: vscode.l10n.t('Reload'),
-                    })
-                    .then((item) => {
-                        if (!item) return
-                        vscode.commands.executeCommand('workbench.action.reloadWindow')
-                    })
-            }),
-
             vscode.commands.registerCommand('crayon-box.toggleStatusBar', async () => {
                 statusBar.toggle()
             }),
@@ -69,6 +54,10 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                     globalState.binance = newConfig
                     config.update('binance', newConfig, true)
                     quickPick.dispose()
+
+                    binanceProvider.symbols = newConfig.symbols
+                    statusBar.dispose()
+                    setTimeout(() => statusBar.init(), 300)
                 })
                 quickPick.show()
             }),
@@ -102,6 +91,10 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
                     globalState.stock = newConfig
                     config.update('stock', newConfig, true)
                     quickPick.dispose()
+
+                    stockProvider.symbols = newConfig.symbols
+                    statusBar.dispose()
+                    setTimeout(() => statusBar.init(), 300)
                 })
                 quickPick.show()
             }),

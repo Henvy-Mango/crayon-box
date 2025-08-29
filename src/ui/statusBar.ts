@@ -36,6 +36,10 @@ export default class StatusBar {
 
     dispose() {
         this.binanceStatusBarList.forEach((i) => i.dispose())
+        this.stockStatusBarList.forEach((i) => i.dispose())
+
+        this.binanceStatusBarList = []
+        this.stockStatusBarList = []
     }
 
     refresh() {
