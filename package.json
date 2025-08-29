@@ -11,7 +11,7 @@
     "url": "https://github.com/Henvy-Mango/crayon-box.git"
   },
   "engines": {
-    "vscode": "^1.98.0"
+    "vscode": "^1.103.0"
   },
   "icon": "images/logo.png",
   "keywords": [
@@ -175,21 +175,21 @@
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
-    "@types/vscode": "1.98.0",
-    "@typescript-eslint/eslint-plugin": "^8.26.1",
-    "@typescript-eslint/parser": "^8.26.1",
-    "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1",
-    "@vscode/vsce": "^3.3.0",
-    "axios": "^1.8.3",
-    "bignumber.js": "^9.1.2",
-    "dayjs": "^1.11.13",
-    "esbuild": "^0.25.1",
-    "eslint": "^9.22.0",
-    "eslint-plugin-prettier": "^5.2.3",
+    "@types/vscode": "1.103.0",
+    "@typescript-eslint/eslint-plugin": "^8.41.0",
+    "@typescript-eslint/parser": "^8.41.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.6.0",
+    "axios": "^1.11.0",
+    "bignumber.js": "^9.3.1",
+    "dayjs": "^1.11.15",
+    "esbuild": "^0.25.9",
+    "eslint": "^9.34.0",
+    "eslint-plugin-prettier": "^5.5.4",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.5.3",
-    "typescript": "^5.8.2"
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
