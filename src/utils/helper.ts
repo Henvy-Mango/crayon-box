@@ -14,7 +14,7 @@ export function formatNumber(input: string | number) {
 }
 
 export function isTradingHours() {
-    const startTime = dayjs().hour(9)
+    const startTime = dayjs().hour(9).minute(0)
     const endTime = dayjs().hour(15).minute(30)
 
     return dayjs().isBefore(endTime) && dayjs().isAfter(startTime)
